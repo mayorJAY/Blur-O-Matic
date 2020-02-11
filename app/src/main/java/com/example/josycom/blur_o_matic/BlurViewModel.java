@@ -3,6 +3,7 @@ package com.example.josycom.blur_o_matic;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkContinuation;
 import androidx.work.WorkManager;
@@ -43,7 +44,9 @@ public class BlurViewModel extends AndroidViewModel {
      */
     void applyBlur(int blurLevel) {
         // WorkRequest to cleanup temporary files
-        WorkContinuation continuation = mWorkManager.beginWith(OneTimeWorkRequest.from(CleanupWorker.class));
+        WorkContinuation continuation = mWorkManager.beginUniqueWork(Constants.IMAGE_MANIPULATION_WORK_NAME,
+                ExistingWorkPolicy.REPLACE,
+                OneTimeWorkRequest.from(CleanupWorker.class));
         // WorkRequest to blur the image
         for (int i = 0; i < blurLevel; i++) {
             OneTimeWorkRequest.Builder blurBuilder = new OneTimeWorkRequest.Builder(BlurWorker.class);
