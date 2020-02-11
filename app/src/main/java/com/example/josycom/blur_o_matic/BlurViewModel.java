@@ -2,10 +2,12 @@ package com.example.josycom.blur_o_matic;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkContinuation;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import android.app.Application;
@@ -16,14 +18,22 @@ import com.example.josycom.blur_o_matic.workers.BlurWorker;
 import com.example.josycom.blur_o_matic.workers.CleanupWorker;
 import com.example.josycom.blur_o_matic.workers.SaveImageToFileWorker;
 
+import java.util.List;
+
 public class BlurViewModel extends AndroidViewModel {
 
     private Uri mImageUri;
     private WorkManager mWorkManager;
+    private LiveData<List<WorkInfo>> mSavedWorkInfo;
 
     public BlurViewModel(@NonNull Application application) {
         super(application);
         mWorkManager = WorkManager.getInstance(application);
+        mSavedWorkInfo = mWorkManager.getWorkInfosByTagLiveData(Constants.TAG_OUTPUT);
+    }
+
+    public LiveData<List<WorkInfo>> getOutputWorkInfo() {
+        return mSavedWorkInfo;
     }
 
     /**
@@ -57,6 +67,7 @@ public class BlurViewModel extends AndroidViewModel {
         }
         // WorkRequest to save the image to filesystem
         OneTimeWorkRequest save = new OneTimeWorkRequest.Builder(SaveImageToFileWorker.class)
+                .addTag(Constants.TAG_OUTPUT)
                 .build();
         continuation = continuation.then(save);
 
