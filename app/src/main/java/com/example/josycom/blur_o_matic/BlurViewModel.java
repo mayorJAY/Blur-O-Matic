@@ -9,7 +9,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkContinuation;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-
 import android.app.Application;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -25,6 +24,7 @@ public class BlurViewModel extends AndroidViewModel {
     private Uri mImageUri;
     private WorkManager mWorkManager;
     private LiveData<List<WorkInfo>> mSavedWorkInfo;
+    private Uri mOutputUri;
 
     public BlurViewModel(@NonNull Application application) {
         super(application);
@@ -96,4 +96,21 @@ public class BlurViewModel extends AndroidViewModel {
         return mImageUri;
     }
 
+    /**
+     * Setters
+     */
+    void setOutputUri(String outputImageUri){
+        mOutputUri = uriOrNull(outputImageUri);
+    }
+
+    /**
+     * Getters
+     */
+    Uri getOutputUri(){
+        return mOutputUri;
+    }
+
+//    void cancelWork(){
+//        mWorkManager.cancelUniqueWork(Constants.IMAGE_MANIPULATION_WORK_NAME);
+//    }
 }
