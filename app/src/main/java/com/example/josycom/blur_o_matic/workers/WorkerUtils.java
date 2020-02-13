@@ -1,7 +1,5 @@
 package com.example.josycom.blur_o_matic.workers;
 
-
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;

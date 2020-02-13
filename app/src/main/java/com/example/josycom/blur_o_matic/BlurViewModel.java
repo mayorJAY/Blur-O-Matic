@@ -3,8 +3,10 @@ package com.example.josycom.blur_o_matic;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkContinuation;
 import androidx.work.WorkInfo;
@@ -65,8 +67,11 @@ public class BlurViewModel extends AndroidViewModel {
                     }
             continuation = continuation.then(blurBuilder.build());
         }
+
+        //Constraints constraints = new Constraints.Builder().setRequiresCharging(true).build();
         // WorkRequest to save the image to filesystem
         OneTimeWorkRequest save = new OneTimeWorkRequest.Builder(SaveImageToFileWorker.class)
+                //.setConstraints(constraints)
                 .addTag(Constants.TAG_OUTPUT)
                 .build();
         continuation = continuation.then(save);
@@ -110,7 +115,7 @@ public class BlurViewModel extends AndroidViewModel {
         return mOutputUri;
     }
 
-//    void cancelWork(){
-//        mWorkManager.cancelUniqueWork(Constants.IMAGE_MANIPULATION_WORK_NAME);
-//    }
+    void cancelWork(){
+        mWorkManager.cancelUniqueWork(Constants.IMAGE_MANIPULATION_WORK_NAME);
+    }
 }

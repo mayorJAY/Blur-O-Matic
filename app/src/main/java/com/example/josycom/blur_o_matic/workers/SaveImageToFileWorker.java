@@ -33,6 +33,8 @@ public class SaveImageToFileWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        WorkerUtils.makeStatusNotification("Doing save image work", getApplicationContext());
+        WorkerUtils.sleep();
         Context applicationContext = getApplicationContext();
         ContentResolver resolver = applicationContext.getContentResolver();
         try {

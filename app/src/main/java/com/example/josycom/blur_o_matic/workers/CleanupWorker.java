@@ -22,6 +22,8 @@ public class CleanupWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        WorkerUtils.makeStatusNotification("Doing cleanup work", getApplicationContext());
+        WorkerUtils.sleep();
         Context applicationContext = getApplicationContext();
         try {
             File outputDirectory = new File(applicationContext.getFilesDir(), Constants.OUTPUT_PATH);
