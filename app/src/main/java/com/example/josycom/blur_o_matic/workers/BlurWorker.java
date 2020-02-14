@@ -14,7 +14,6 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.josycom.blur_o_matic.Constants;
-import com.example.josycom.blur_o_matic.R;
 
 
 public class BlurWorker extends Worker {

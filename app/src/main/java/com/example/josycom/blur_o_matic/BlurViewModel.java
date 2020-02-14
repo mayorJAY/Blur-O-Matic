@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
-import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkContinuation;
 import androidx.work.WorkInfo;
@@ -68,10 +67,10 @@ public class BlurViewModel extends AndroidViewModel {
             continuation = continuation.then(blurBuilder.build());
         }
 
-        //Constraints constraints = new Constraints.Builder().setRequiresCharging(true).build();
+        Constraints constraints = new Constraints.Builder().setRequiresCharging(true).build();
         // WorkRequest to save the image to filesystem
         OneTimeWorkRequest save = new OneTimeWorkRequest.Builder(SaveImageToFileWorker.class)
-                //.setConstraints(constraints)
+                .setConstraints(constraints)
                 .addTag(Constants.TAG_OUTPUT)
                 .build();
         continuation = continuation.then(save);
