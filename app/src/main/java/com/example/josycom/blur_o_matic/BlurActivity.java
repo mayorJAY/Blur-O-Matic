@@ -1,7 +1,8 @@
 package com.example.josycom.blur_o_matic;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class BlurActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blur);
 
         // Get the ViewModel
-        mViewModel = ViewModelProviders.of(this).get(BlurViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(BlurViewModel.class);
 
         // Get all of the Views
         mImageView = findViewById(R.id.image_view);
